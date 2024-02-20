@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Navbar from './components/Navbar/Navbar.vue'
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
@@ -17,7 +17,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
     </footer>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
 
 <style scoped>
