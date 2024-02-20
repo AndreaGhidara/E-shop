@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import Hero from '../components/Hero/Hero.vue'
 
 </script>
 
 
 <template>
     <section>
-        <h1 class="text-2xl font-bold bg-green-300">Home</h1>
+        <Hero />
     </section>
 </template>
 
