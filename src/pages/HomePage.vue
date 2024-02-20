@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Banner from '../components/Banner/Banner.vue'
 import Hero from '../components/Hero/Hero.vue'
 
 </script>
@@ -7,6 +8,7 @@ import Hero from '../components/Hero/Hero.vue'
 <template>
     <section>
         <Hero />
+        <Banner />
     </section>
 </template>
 
