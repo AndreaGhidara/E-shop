@@ -1,40 +1,89 @@
 <script setup lang="ts">
+import ApiService from '../../../services/api.service';
+
+const registerDataForm = {
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: ""
+}
+
+
+function sendDataForm() {
+
+    if (registerDataForm.password === registerDataForm.password_confirmation) {
+        ApiService.callRegister(registerDataForm)
+            .then(response => {
+                console.log(response.data);
+                alert("Saved successfully");
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Failed to save");
+            });
+    } else {
+        alert('le password non coincidono')
+    }
+
+    // if (registerDataForm.password) {
+    //     ApiService.callRegister(registerDataForm)
+    //         .then(response => {
+    //             console.log(response.data);
+    //             alert("Saved successfully");
+    //         })
+    //         .catch(error => {
+    //             console.error(error);
+    //             alert("Failed to save");
+    //         });
+    // } else {
+    //     alert('le password non coincidono')
+    // }
+
+}
+
+
 
 </script>
 
 <template>
     <div class="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
         <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-            <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+            <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow-2xl rounded-3xl sm:p-10">
                 <div class="max-w-md mx-auto text-white">
                     <div class="flex items-center justify-center">
                         <h1 class="text-2xl text-black">Register</h1>
                     </div>
-                    <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <label class="font-semibold text-sm text-gray-400 pb-1 block" for="fullname">Username</label>
-                            <input
-                                class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                type="text" id="fullname" />
-                        </div>
-                        <div>
-                            <label class="font-semibold text-sm text-gray-400 pb-1 block" for="email">Email</label>
-                            <input
-                                class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                type="email" id="email" />
-                        </div>
-                        <div>
-                            <label class="font-semibold text-sm text-gray-400 pb-1 block" for="password">Password</label>
-                            <input
-                                class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                type="password" id="password" />
-                        </div>
-                        <div>
-                            <label class="font-semibold text-sm text-gray-400 pb-1 block" for="password">Password Confirm</label>
-                            <input
-                                class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                                type="password" id="password" />
-                        </div>
+                    <div class="mt-5 text-gray-400">
+                        <form class="grid grid-cols-1 sm:grid-cols-2 gap-5" action="">
+                            <!--USERNAME-->
+                            <div>
+                                <label class="font-semibold text-sm pb-1 block" for="fullname">Username</label>
+                                <input v-model="registerDataForm.name"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="text" id="username" autocomplete="username" />
+                            </div>
+                            <!--EMAIL-->
+                            <div>
+                                <label class="font-semibold text-sm pb-1 block" for="email">Email</label>
+                                <input v-model="registerDataForm.email"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="email" id="email" autocomplete="email" />
+                            </div>
+                            <!--PASSWORD-->
+                            <div>
+                                <label class="font-semibold text-sm pb-1 block" for="password">Password</label>
+                                <input v-model="registerDataForm.password"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="password" id="password" autocomplete="new-password" />
+                            </div>
+                            <!--CONFIRM-PASSWORD-->
+                            <div>
+                                <label class="font-semibold text-sm pb-1 block" for="password">Password Confirm</label>
+                                <input v-model="registerDataForm.password_confirmation"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="password" id="passwordConfirm" autocomplete="new-password" />
+                            </div>
+                        </form>
                     </div>
                     <div class="flex justify-center items-center">
                         <div>
@@ -85,12 +134,12 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <button
+                        <button @click="sendDataForm()"
                             class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                             type="submit">
                             Sign up
                         </button>
-                    </div> 
+                    </div>
                     <div class="flex items-center justify-between mt-4 text-center">
                         <span class="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
 

@@ -1,30 +1,74 @@
 <script setup lang="ts">
 
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+
+const router = useRouter();
+
+const loginDataForm = reactive({
+    email: "",
+    password: ""
+});
+
+
+const message = ref();
+
+function submit() {
+    message.value = '';
+
+    axios.post('http:localhost:8000/api/login', loginDataForm)
+        .then(response => {
+            localStorage.setItem('token', response.data.token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            router.push({ name: 'user' });
+        })
+        .catch(error => {
+            if (error.response.status === 422) {
+                message.value = error.response.data.message;
+            }
+        })
+        .finally(() => loginDataForm.password = '');
+}
+
+
+function sendDataForm() {
+    console.log(loginDataForm);
+
+}
+
 </script>
 
 <template>
     <div class="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
-        <div class="relative py-3 sm:mx-auto">
-            <div class="relative w-full bg-white shadow rounded-3xl p-10 ">
-                <div class="max-w-md mx-auto">
+        <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+            <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow-2xl rounded-3xl sm:p-10">
+                <div class="max-w-md mx-auto text-white">
                     <div class="flex items-center justify-center">
-                        <h1 class="text-2xl">Login</h1>
+                        <h1 class="text-2xl text-black">Login</h1>
                     </div>
-                    <div class="mt-5">
-                        <label class="font-semibold text-sm text-gray-600 pb-1 block" for="login">E-mail</label>
-                        <input class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" type="text" id="login" />
-                        <label class="font-semibold text-sm text-gray-600 pb-1 block" for="password">Password</label>
-                        <input class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full" type="password" id="password" />
+                    <div class="mt-5 grid grid-cols-1 gap-5 text-gray-400">
+                        <p v-if="message" class="error">{{ message }}</p>
+                        <form action="">
+                            <div>
+                                <label class="font-semibold text-sm  pb-1 block" for="email">Email</label>
+                                <input v-model="loginDataForm.email"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="email" id="email" autocomplete="username" />
+                            </div>
+                            <!-- PASSWORD -->
+                            <div>
+                                <label class="font-semibold text-sm pb-1 block" for="password">Password</label>
+                                <input v-model="loginDataForm.password"
+                                    class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                                    type="password" id="password" autocomplete="current-password" />
+                            </div>
+                        </form>
+                        <!-- EMAIL -->
                     </div>
-                    <div class="text-right mb-4">
-                        <a class="text-xs font-display font-semibold text-gray-500 hover:text-gray-600 cursor-pointer"
-                            href="#">
-                            Forgot Password?
-                        </a>
-                    </div>
-                    <div class="flex justify-center w-full items-center">
+                    <div class="flex justify-center items-center">
                         <div>
-
+                            <!-- BUTTON Login with GOOGLE -->
                             <button
                                 class="flex items-center justify-center p-3 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                                 <svg viewBox="0 0 24 24" height="25" width="25" y="0px" x="0px"
@@ -69,14 +113,14 @@
                                 </svg>
                                 <span class="ml-2 w-full">Sign in with Google</span>
                             </button>
-
                         </div>
                     </div>
                     <div class="mt-5">
-                        <button
+                        <!-- BUTTON LOGIN -->
+                        <button @click="sendDataForm()"
                             class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                             type="submit">
-                            Log in
+                            Sign up
                         </button>
                     </div>
                     <div class="flex items-center justify-between mt-4 text-center">
@@ -87,7 +131,8 @@
                                 or sign up
                             </a>
                         </RouterLink>
-                        <span class="w-1/5 border-b dark:border-gray-400 md:w-1/4"></span>
+
+                        <span class="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
                     </div>
                 </div>
             </div>

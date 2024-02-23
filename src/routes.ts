@@ -1,9 +1,11 @@
+
 import { createRouter, createWebHistory } from 'vue-router';
 
+//PAGES
 import Home from './pages/HomePage.vue';
-import About from './pages/AboutPage.vue';
 import RegisterPage from './pages/auth/Register/RegisterPage.vue';
 import LoginPage from './pages/auth/Login/LoginPage.vue';
+import Dashboard from './pages/auth/Dashboard/Dashboard.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -11,7 +13,7 @@ const router = createRouter({
         {
             path: '/',
             name: "",
-            component: Home,
+            component: LoginPage,
         },
         {
             path: '/login',
@@ -24,6 +26,11 @@ const router = createRouter({
             component: RegisterPage,
         },
         {
+            path: '/dashboard',
+            name: "dashboard",
+            component: Dashboard,
+        },
+        {
             path: '/home',
             name: "home",
             component: Home,
@@ -31,7 +38,8 @@ const router = createRouter({
         {
             path: '/about',
             name: "about",
-            component: About,
+            component:()=>import('./pages/AboutPage.vue')  // Lazy load
+
         },
     ],
     // scrollBehavior(to, from, savedPosition) {
