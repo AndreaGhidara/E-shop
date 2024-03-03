@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
 import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
+import ApiService from '../../../services/api.service';
 
-const router = useRouter();
+// const router = useRouter();
 
 const loginDataForm = reactive({
     email: "",
@@ -17,23 +16,25 @@ const message = ref();
 function submit() {
     message.value = '';
 
-    axios.post('http:localhost:8000/api/login', loginDataForm)
+    ApiService.callLogin(loginDataForm)
         .then(response => {
-            localStorage.setItem('token', response.data.token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-            router.push({ name: 'user' });
-        })
-        .catch(error => {
-            if (error.response.status === 422) {
-                message.value = error.response.data.message;
+            if (response.data.status) {
+                localStorage.setItem("token" , response.data.token)
+                alert("Saved successfully");
+            } else {
+                alert("errore dati")
             }
         })
-        .finally(() => loginDataForm.password = '');
+        .catch(error => {
+            console.error(error);
+            alert("Error");
+        });
 }
 
 
 function sendDataForm() {
     console.log(loginDataForm);
+    submit();
 
 }
 

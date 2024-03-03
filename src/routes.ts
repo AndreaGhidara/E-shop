@@ -6,6 +6,7 @@ import Home from './pages/HomePage.vue';
 import RegisterPage from './pages/auth/Register/RegisterPage.vue';
 import LoginPage from './pages/auth/Login/LoginPage.vue';
 import Dashboard from './pages/auth/Dashboard/Dashboard.vue';
+import LandingPage from './pages/auth/LandingPage/LandingPage.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -34,6 +35,11 @@ const router = createRouter({
             path: '/home',
             name: "home",
             component: Home,
+        },
+        {
+            path: '/test',
+            name: "LandingPage",
+            component: LandingPage,
         },
         {
             path: '/about',
