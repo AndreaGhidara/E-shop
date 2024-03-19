@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from './pages/HomePage.vue';
 import About from './pages/AboutPage.vue';
+import LandingTest from './pages/Convengo/LandingAppPage.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
             path: '/about',
             name: "about",
             component: About,
+        },
+        {
+            path: '/test',
+            name: "test",
+            component: LandingTest,
         },
     ],
     // scrollBehavior(to, from, savedPosition) {

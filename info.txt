@@ -1,0 +1,8 @@
+Color Palete:
+-Blue(Navbar) = #1F3077
+-Orange(Sfonto) = #FFE3CB
+-Orange(Button) = #FF7D08
+-Orange(ButtonActive) = #EC4900
+
+
+Bottoni: borderRadius 8px

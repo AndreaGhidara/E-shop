@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import Navbar from './components/Navbar/Navbar.vue'
+// import Navbar from './components/Navbar/Navbar.vue'
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <div>
-    <header>
+    <!-- <header>
       <Navbar />
-    </header>
+    </header> -->
     <main>
       <router-view>
 
